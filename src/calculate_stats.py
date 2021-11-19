@@ -1,7 +1,6 @@
 from scipy.stats import t, norm
 import random
 
-from mylib.mycolors import hsv_to_rgb
 
 class Student:
     def __init__(self, ID, sex, teacher, status, SOL_score):
@@ -50,21 +49,21 @@ def is_student_meets_conditions(student, *conditions):
     return all(condition(student) for condition in conditions)
 
 
-def generate_report_for_population_proportion(population_proportion, students, *conditions, sample_size=30, alpha=0.01, title=None, min_N=10):
+def generate_report_for_population_proportion(population_proportion, students, *conditions,
+                                              sample_size=50, alpha=0.01, title=None, min_N=10):
     if title is not None:
         print(title)
         print("-" * len(title))
 
     sample = random.sample(students, sample_size)
     students_of_interest = get_students_which_meet_conditions(sample, *conditions)
-    sample_proportion = len(students_of_interest) / len(sample)
+    print("IDs of sampled students:", [student.ID_Number for student in sample])
     x = len(students_of_interest)
+    sample_proportion = x / sample_size
     if x < min_N or sample_size - x < min_N:
         print(f"Insufficient sample size. Only {x} of {sample_size} met condition.")
         print("\n\n\n")
         return
-
-    print("IDs of sampled students:", [student.ID_Number for student in students_of_interest])
 
     Z = (sample_proportion - population_proportion) / (population_proportion * (1 - population_proportion) / sample_size) ** 0.5
     p_value = 2 * (1 - norm.cdf(abs(Z)))
@@ -86,19 +85,18 @@ def generate_report_for_population_proportion(population_proportion, students, *
     print("\n\n\n")
 
 
-def generate_report_for_population_average(population_mean, students, *conditions, sample_size=30, alpha=0.01, title=None, min_N=30):
+def generate_report_for_population_average(population_mean, students, *conditions, sample_size=50, alpha=0.01, title=None, min_N=30):
     if title is not None:
         print(title)
         print("-" * len(title))
 
     students_of_interest = random.sample(get_students_which_meet_conditions(students, *conditions), sample_size)
+    print("IDs of sampled students:", [student.ID_Number for student in students_of_interest])
     n = len(students_of_interest)
     if n < min_N:
         print(f"Insufficient sample size ({n}).")
         print("\n\n\n")
         return
-
-    print("IDs of sampled students:", [student.ID_Number for student in students_of_interest])
 
     sample_mean = average_SOL_score(students_of_interest)
     sample_std_dev = sample_standard_deviation_SOL_score(students_of_interest)
