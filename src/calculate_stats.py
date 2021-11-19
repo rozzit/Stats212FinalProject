@@ -50,7 +50,7 @@ def is_student_meets_conditions(student, *conditions):
 
 
 def generate_report_for_population_proportion(population_proportion, students, *conditions,
-                                              sample_size=50, alpha=0.01, title=None, min_N=10):
+                                              sample_size=30, alpha=0.01, title=None, min_N=10):
     if title is not None:
         print(title)
         print("-" * len(title))
@@ -85,7 +85,7 @@ def generate_report_for_population_proportion(population_proportion, students, *
     print("\n\n\n")
 
 
-def generate_report_for_population_average(population_mean, students, *conditions, sample_size=50, alpha=0.01, title=None, min_N=30):
+def generate_report_for_population_average(population_mean, students, *conditions, sample_size=30, alpha=0.01, title=None, min_N=30):
     if title is not None:
         print(title)
         print("-" * len(title))
