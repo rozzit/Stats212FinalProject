@@ -91,7 +91,6 @@ def generate_report_for_population_average(population_mean, students, *condition
         print("-" * len(title))
 
     students_of_interest = random.sample(get_students_which_meet_conditions(students, *conditions), sample_size)
-    print("IDs of sampled students:", [student.ID_Number for student in students_of_interest])
     n = len(students_of_interest)
     if n < min_N:
         print(f"Insufficient sample size ({n}).")
@@ -116,6 +115,13 @@ def generate_report_for_population_average(population_mean, students, *condition
         print("Because the p-value is less than alpha, we reject the null hypothesis in favor of the alternative hypothesis.")
     else:
         print("Because the p-value is not less than alpha, we fail to reject the null hypothesis.")
+
+    print("Raw data: ")
+    print("\tID\tScore")
+    print("\t--\t-----")
+    for student in students_of_interest:
+        print(f"\t{student.ID_Number}\t{student.SOL_score}")
+    
     print("\n\n\n")
 
 
@@ -150,7 +156,6 @@ is_normal = lambda s: s.Status == ''
 scored_below_400 = lambda s: s.SOL_score < 400
 scored_between_400_and_499 = lambda s: 400 <= s.SOL_score <= 499
 scored_above_499 = lambda s: s.SOL_score > 499
-
 
 def main():
     random.seed(0)
