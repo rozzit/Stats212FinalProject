@@ -57,7 +57,13 @@ def generate_report_for_population_proportion(population_proportion, students, *
 
     sample = random.sample(students, sample_size)
     students_of_interest = get_students_which_meet_conditions(sample, *conditions)
-    print("IDs of sampled students:", [student.ID_Number for student in sample])
+    
+    print("Raw data: ")
+    print("\tID\tScore")
+    print("\t--\t-----")
+    for student in sample:
+        print(f"\t{student.ID_Number}\t{student.SOL_score}")
+
     x = len(students_of_interest)
     sample_proportion = x / sample_size
     if x < min_N or sample_size - x < min_N:
@@ -82,6 +88,7 @@ def generate_report_for_population_proportion(population_proportion, students, *
               "in favor of the alternative hypothesis.")
     else:
         print("Because the p-value is not less than alpha, we fail to reject the null hypothesis.")
+
     print("\n\n\n")
 
 
@@ -91,6 +98,13 @@ def generate_report_for_population_average(population_mean, students, *condition
         print("-" * len(title))
 
     students_of_interest = random.sample(get_students_which_meet_conditions(students, *conditions), sample_size)
+
+    print("Raw data: ")
+    print("\tID\tScore")
+    print("\t--\t-----")
+    for student in students_of_interest:
+        print(f"\t{student.ID_Number}\t{student.SOL_score}")
+
     n = len(students_of_interest)
     if n < min_N:
         print(f"Insufficient sample size ({n}).")
@@ -115,12 +129,6 @@ def generate_report_for_population_average(population_mean, students, *condition
         print("Because the p-value is less than alpha, we reject the null hypothesis in favor of the alternative hypothesis.")
     else:
         print("Because the p-value is not less than alpha, we fail to reject the null hypothesis.")
-
-    print("Raw data: ")
-    print("\tID\tScore")
-    print("\t--\t-----")
-    for student in students_of_interest:
-        print(f"\t{student.ID_Number}\t{student.SOL_score}")
     
     print("\n\n\n")
 
