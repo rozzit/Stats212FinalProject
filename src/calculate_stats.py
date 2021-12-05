@@ -1,6 +1,6 @@
 from scipy.stats import t, norm
 import random
-
+from sys import argv
 
 class Student:
     def __init__(self, ID, sex, teacher, status, SOL_score):
@@ -166,36 +166,48 @@ scored_between_400_and_499 = lambda s: 400 <= s.SOL_score <= 499
 scored_above_499 = lambda s: s.SOL_score > 499
 
 def main():
+    show_for_everyone = 'EVERYONE'
+    if len(argv) == 1:
+        show_results_for = show_for_everyone
+    else:
+        show_results_for = argv[1].upper()
+
     random.seed(0)
     students = read_in_students_from_csv()
     validate_data(students)
 
-    # The overall state average math SOL score is 467.78.
-    generate_report_for_population_average(467.78, students, all_students, alpha=0.01, title='Overall Average Math Score')
+    if show_results_for in {'NICK', show_for_everyone}:
+        # The state average for ESL students is 404.56
+        generate_report_for_population_average(404.56, students, is_esl, alpha=0.01, title='Average for ESL Students')
 
-    # The state average for ESL students is 404.56
-    generate_report_for_population_average(404.56, students, is_esl, alpha=0.01, title='Average for ESL Students')
+        # The state average for remedial students is 419.31
+        generate_report_for_population_average(419.31, students, is_remedial, alpha=0.01, title='Average for Remedial Students')
 
-    # The state average for remedial students is 419.31
-    generate_report_for_population_average(419.31, students, is_remedial, alpha=0.01, title='Average for Remedial Students')
 
-    # The state average for gifted students is 562.39
-    generate_report_for_population_average(562.39, students, is_gifted, alpha=0.01, title='Average for Gifted Students')
+    if show_results_for in {'TONY', show_for_everyone}:
+        # The state average for gifted students is 562.39
+        generate_report_for_population_average(562.39, students, is_gifted, alpha=0.01, title='Average for Gifted Students')
 
-    # The proportion of all students statewide who score 399 or below is 8.47%
-    generate_report_for_population_proportion(0.0847, students, scored_below_400, alpha=0.01, title='Proportion less than 400')
+        # The proportion of all students statewide who score 399 or below is 8.47%
+        generate_report_for_population_proportion(0.0847, students, scored_below_400, alpha=0.01, title='Proportion less than 400')
 
+    if show_results_for in {'KAYKAY', show_for_everyone}:
+        # The state average score for females is 465.22.
+        generate_report_for_population_average(465.22, students, is_female, alpha=0.01, title='Average Female SOL Score')
+
+        # The overall state average math SOL score is 467.78.
+        generate_report_for_population_average(467.78, students, all_students, alpha=0.01, title='Overall Average Math Score')
+
+    
     # The proportion of all students statewide who score between 400 - 499 is 61.05%
-    generate_report_for_population_proportion(0.6105, students, scored_between_400_and_499, alpha=0.01, title='Proportion in range [400, 500)')
+    # generate_report_for_population_proportion(0.6105, students, scored_between_400_and_499, alpha=0.01, title='Proportion in range [400, 500)')
 
     # The proportion of all students statewide who score between 500 - 600 is 30.48%
-    generate_report_for_population_proportion(0.3048, students, scored_above_499, alpha=0.01, title='Proportion greater than or equal to 500')
+    # generate_report_for_population_proportion(0.3048, students, scored_above_499, alpha=0.01, title='Proportion greater than or equal to 500')
 
     # The state average score for males is 470.56.
-    generate_report_for_population_average(470.56, students, is_male, alpha=0.01, title='Average Male SOL Score')
-    # The state average score for females is 465.22.
-    generate_report_for_population_average(465.22, students, is_female, alpha=0.01, title='Average Female SOL Score')
-
+    # generate_report_for_population_average(470.56, students, is_male, alpha=0.01, title='Average Male SOL Score')
+    
 
 if __name__ == '__main__':
     main()
