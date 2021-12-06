@@ -189,7 +189,8 @@ def main():
         generate_report_for_population_average(562.39, students, is_gifted, alpha=0.01, title='Average for Gifted Students')
 
         # The proportion of all students statewide who score 399 or below is 8.47%
-        generate_report_for_population_proportion(0.0847, students, scored_below_400, alpha=0.01, title='Proportion less than 400')
+        generate_report_for_population_proportion(0.0847, students, scored_below_400, alpha=0.01, 
+        title='Proportion less than 400', sample_size=130)
 
     if show_results_for in {'KAYKAY', show_for_everyone}:
         # The state average score for females is 465.22.
